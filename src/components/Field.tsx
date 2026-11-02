@@ -17,7 +17,7 @@ export default function Field({
         type={type}
         placeholder={placeholder}
         required
-        className="mt-1 w-full rounded-lg border border-zinc-300 bg-transparent px-3 py-2 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:border-zinc-700"
+        className="mt-1 w-full rounded-lg border border-zinc-300 bg-transparent px-3 py-2 outline-none focus:border-primary focus:ring-2 focus:ring-accent"
       />
     </label>
   );
