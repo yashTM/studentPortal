@@ -49,7 +49,7 @@ export default function Documents() {
                 <div className="min-w-0">
                   <p className="font-semibold">{d.name}</p>
                   <p className="mt-0.5 truncate text-sm text-foreground/60">
-                    {file ? `📄 ${file}` : "No file uploaded yet"}
+                    {file ? file : "No file uploaded yet"}
                   </p>
                   {errors[d.key] && (
                     <p className="mt-1 text-sm text-red-600">{errors[d.key]}</p>

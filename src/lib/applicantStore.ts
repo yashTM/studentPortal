@@ -3,6 +3,21 @@ import { useSyncExternalStore } from "react";
 export type SectionKey = "personal" | "contact" | "academic" | "program";
 export type Application = Record<SectionKey, Record<string, string>>;
 
+export type WizardState = {
+  step: number; // 0-4 = wizard steps, 5 = review
+  completed: boolean;
+  completedAt?: string | null; // ISO date (demo state)
+  data: Record<string, string>;
+  flags: Record<string, boolean>;
+  docs: Record<string, string>; // onboarding uploads (file names only, simulated)
+  payment: {
+    option: "full" | "installment" | null;
+    status: "idle" | "paid";
+    amount: number;
+    reference: string | null;
+  };
+};
+
 export type State = {
   account: { name: string; email: string } | null;
   application: Application;
@@ -12,9 +27,19 @@ export type State = {
   decision: "pending" | "admitted";
   offerAccepted: boolean;
   enrollment: Record<string, boolean>;
+  wizard: WizardState;
 };
 
 const KEY = "student-portal-applicant";
+
+export const initialWizard: WizardState = {
+  step: 0,
+  completed: false,
+  data: {},
+  flags: {},
+  docs: {},
+  payment: { option: null, status: "idle", amount: 0, reference: null },
+};
 
 export const initialState: State = {
   account: null,
@@ -25,6 +50,7 @@ export const initialState: State = {
   decision: "pending",
   offerAccepted: false,
   enrollment: {},
+  wizard: initialWizard,
 };
 
 let cache: { raw: string | null; value: State } = {

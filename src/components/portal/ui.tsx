@@ -1,5 +1,9 @@
+import { Lock } from "lucide-react";
 import Link from "next/link";
+import { cn } from "@/lib/cn";
+import { buttonStyles } from "@/components/ui/Button";
 
+/** Flat, bordered surface. Use for discrete or grouped items, not for every section. */
 export function Card({
   children,
   className = "",
@@ -8,20 +12,30 @@ export function Card({
   className?: string;
 }) {
   return (
-    <section className={`rounded-2xl bg-white p-6 shadow-sm ${className}`}>
+    <section className={cn("rounded-lg border border-line bg-surface p-6 shadow-sm", className)}>
       {children}
     </section>
   );
 }
 
 const badgeTones = {
-  green: "bg-green-100 text-green-800",
-  blue: "bg-blue-100 text-blue-800",
-  amber: "bg-amber-100 text-amber-800",
-  red: "bg-red-100 text-red-800",
-  grey: "bg-zinc-100 text-zinc-700",
+  green: "bg-success-bg text-success-fg",
+  blue: "bg-info-bg text-info-fg",
+  amber: "bg-warning-bg text-warning-fg",
+  red: "bg-danger-bg text-danger-fg",
+  grey: "bg-muted text-n-600",
+  brand: "bg-brand-100 text-brand-800",
+};
+const dotTones = {
+  green: "bg-success",
+  blue: "bg-info",
+  amber: "bg-warning",
+  red: "bg-danger",
+  grey: "bg-n-400",
+  brand: "bg-brand-600",
 };
 
+/** Status pill: one size, tinted background, small leading dot. */
 export function Badge({
   tone,
   children,
@@ -31,8 +45,12 @@ export function Badge({
 }) {
   return (
     <span
-      className={`inline-block shrink-0 rounded-full px-3 py-1 text-xs font-semibold ${badgeTones[tone]}`}
+      className={cn(
+        "inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold",
+        badgeTones[tone],
+      )}
     >
+      <span aria-hidden className={cn("h-1.5 w-1.5 rounded-full", dotTones[tone])} />
       {children}
     </span>
   );
@@ -50,23 +68,19 @@ export function Locked({
   cta: string;
 }) {
   return (
-    <Card className="mx-auto max-w-xl text-center">
-      <p className="text-4xl" aria-hidden>
-        🔒
-      </p>
-      <h1 className="mt-3 text-2xl font-semibold text-primary">{title}</h1>
-      <p className="mt-2 text-foreground/70">{text}</p>
-      <Link
-        href={href}
-        className="mt-6 inline-block rounded-full bg-primary px-6 py-2.5 font-semibold text-white hover:opacity-90"
-      >
+    <div className="mx-auto max-w-xl rounded-lg border border-line bg-surface p-8 sm:p-10">
+      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-50 text-primary">
+        <Lock aria-hidden className="h-5 w-5" />
+      </span>
+      <h1 className="mt-5 text-2xl">{title}</h1>
+      <p className="mt-2 text-subtle">{text}</p>
+      <Link href={href} className={buttonStyles({ className: "mt-6" })}>
         {cta}
       </Link>
-    </Card>
+    </div>
   );
 }
 
-export const primaryButton =
-  "rounded-full bg-primary px-6 py-2.5 font-semibold text-white hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40";
-export const secondaryButton =
-  "rounded-full border border-primary/30 px-6 py-2.5 font-semibold text-primary hover:bg-muted";
+// Legacy class-string exports (used across the existing screens).
+export const primaryButton = buttonStyles({ variant: "primary" });
+export const secondaryButton = buttonStyles({ variant: "secondary" });
