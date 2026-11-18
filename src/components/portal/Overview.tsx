@@ -4,6 +4,8 @@ import Link from "next/link";
 import { dates, keyDates } from "@/data/admission";
 import { useApplicant } from "@/lib/applicantStore";
 import { computeJourney, type StageStatus } from "@/lib/journey";
+import { buttonStyles } from "@/components/ui/Button";
+import PortalHero from "./PortalHero";
 import { Badge, Card } from "./ui";
 
 const stageBadge: Record<StageStatus, { tone: "green" | "blue" | "grey"; text: string }> = {
@@ -33,7 +35,7 @@ export default function Overview() {
   return (
     <div className="space-y-8">
       {!s.account && (
-        <p className="rounded-xl bg-accent/20 px-4 py-3 text-sm">
+        <p className="rounded-md border border-warning/30 bg-warning-bg px-4 py-3 text-sm text-warning-fg">
           You are viewing the portal without an account.{" "}
           <Link href="/signup" className="font-semibold text-primary underline">
             Create an account
@@ -42,32 +44,24 @@ export default function Overview() {
         </p>
       )}
 
-      <section>
-        <p className="text-sm font-semibold uppercase tracking-wide text-foreground/60">
-          Stage {j.currentIndex + 1} of {j.stages.length} · {current.title}
-        </p>
-        <h1 className="mt-1 text-3xl font-semibold text-primary sm:text-4xl">
-          Welcome back, {firstName}
-        </h1>
-        <div className="mt-4 max-w-xl">
-          <div className="flex justify-between text-sm text-foreground/70">
+      <PortalHero eyebrow={`Stage ${j.currentIndex + 1} of ${j.stages.length} · ${current.title}`} title={`Welcome back, ${firstName}`}>
+        <div className="mt-5 max-w-xl">
+          <div className="flex justify-between text-sm text-white/85">
             <span>Your admission journey</span>
-            <span>
+            <span className="tnum">
               {j.done} of {j.total} steps complete
             </span>
           </div>
-          <div className="mt-2 h-2.5 overflow-hidden rounded-full bg-primary/10">
-            <div
-              className="h-full rounded-full bg-primary transition-all"
-              style={{ width: `${(j.done / j.total) * 100}%` }}
-            />
+          <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/20">
+            <div className="grow-x h-full rounded-full bg-accent" style={{ width: `${(j.done / j.total) * 100}%` }} />
           </div>
         </div>
-      </section>
+      </PortalHero>
 
       {j.actions.length > 0 && (
-        <section className="rounded-2xl border border-accent/60 bg-accent/20 p-5">
-          <h2 className="text-xl font-semibold text-accent-foreground">
+        <section className="relative overflow-hidden rounded-lg border border-line bg-surface p-5 pl-6">
+          <span aria-hidden className="absolute inset-y-0 left-0 w-1 bg-accent" />
+          <h2 className="text-xl">
             {j.actions.length} {j.actions.length === 1 ? "action" : "actions"} needed
           </h2>
           <ul className="mt-3 space-y-2 text-sm">
@@ -82,7 +76,7 @@ export default function Overview() {
           </ul>
           <Link
             href={j.actions[0].href}
-            className="mt-4 inline-block rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white hover:opacity-90"
+            className={buttonStyles({ className: "mt-4" })}
           >
             Continue
           </Link>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+/** Applicant sign-in / sign-up card. Rendered inside the public site layout (header and footer provide the branding). */
 export default function AuthCard({
   title,
   subtitle,
@@ -10,15 +11,16 @@ export default function AuthCard({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex flex-1 items-center justify-center bg-muted px-4 py-12">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
-        <Link href="/" className="text-sm text-primary hover:underline">
-          ← Back to home
+    <div className="flex flex-1 items-center justify-center bg-muted px-4 py-14">
+      <div className="w-full max-w-md rounded-lg border border-line bg-surface p-8 shadow-lg">
+        <Link href="/" className="text-sm font-semibold text-primary underline-offset-4 hover:underline">
+          &larr; Back to Home
         </Link>
-        <h1 className="mt-4 text-3xl font-semibold text-primary">{title}</h1>
-        <p className="mt-1 mb-6 text-sm text-zinc-500">{subtitle}</p>
+        <span aria-hidden className="mt-5 block h-[3px] w-10 rounded bg-accent" />
+        <h1 className="mt-3 text-3xl">{title}</h1>
+        <p className="mb-6 mt-1 text-sm text-subtle">{subtitle}</p>
         {children}
       </div>
-    </main>
+    </div>
   );
 }

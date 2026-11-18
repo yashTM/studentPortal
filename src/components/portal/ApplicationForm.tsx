@@ -86,7 +86,7 @@ export default function ApplicationForm() {
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
               <h1 className="text-3xl font-semibold text-primary">
-                {justSubmitted ? "Application submitted 🎉" : "Your application"}
+                {justSubmitted ? "Application submitted" : "Your application"}
               </h1>
               <p className="mt-1 text-foreground/70">
                 Reference <strong>{s.reference}</strong> · submitted on {s.submittedAt}
